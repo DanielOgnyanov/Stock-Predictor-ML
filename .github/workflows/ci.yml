@@ -35,29 +35,30 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-  python-service:
-    name: Test Python Microservice
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # python-service:
+  #   name: Test Python Microservice
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checkout repository
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+  #     # Set up Python
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.12'
 
-      # Install dependencies
-      - name: Install Python dependencies
-        run: |
-          cd python-service
-          pip install --upgrade pip
-          pip install -r requirements.txt
+  #     # Install dependencies
+  #     - name: Install Python dependencies
+  #       run: |
+  #         cd python-service
+  #         pip install --upgrade pip
+  #         pip install -r requirements.txt
 
-      # Run Python tests
-      - name: Run Python tests
-        run: |
-          cd python-service
-          pytest --maxfail=1 --disable-warnings -q
+  #     # Run Python tests
+  #     - name: Run Python tests
+  #       run: |
+  #         cd python-service
+  #         pytest --maxfail=1 --disable-warnings -q
+

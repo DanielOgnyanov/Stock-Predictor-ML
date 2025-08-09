@@ -1,7 +1,8 @@
 package repository;
 
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class PredictionRepository {
+import models.entities.PredictionEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PredictionRepository extends JpaRepository<PredictionEntity, Long> {
 }

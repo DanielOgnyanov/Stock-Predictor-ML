@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import models.enums.Role;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
@@ -49,5 +51,10 @@ public class UserEntity extends BaseEntity{
 
     @Column(name = "locked", nullable = false)
     private boolean locked = false;
+
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PortfolioEntity> portfolios;
 
 }

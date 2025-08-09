@@ -42,12 +42,4 @@ public class PredictionEntity extends BaseEntity{
 
     @Column(name = "prediction_date", nullable = false)
     private Instant predictionDate;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Instant createdAt;
-
-
-    @UpdateTimestamp
-    private Instant updatedAt;
 }

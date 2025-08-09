@@ -5,8 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,57 +25,67 @@ import java.time.Instant;
 @Builder
 public class StockEntity extends BaseEntity{
 
-    @NotNull
-    @Size(max = 10)
+    @NotNull(message = "Symbol is required")
+    @Size(max = 10, message = "Symbol max length is 10")
     @Column(name = "symbol", nullable = false, length = 10)
     private String symbol;
 
-    @Size(max = 100)
+    @Size(max = 100, message = "Name max length is 100")
     @Column(name = "name")
     private String name;
 
-    @Size(max = 10)
+    @Size(max = 10, message = "Exchange max length is 10")
     @Column(name = "exchange")
     private String exchange;
 
-    @Size(max = 10)
+    @Size(max = 10, message = "MIC code max length is 10")
     @Column(name = "mic_code")
     private String micCode;
 
-    @Size(max = 5)
+    @Size(max = 5, message = "Currency max length is 5")
     @Column(name = "currency")
     private String currency;
 
+    @NotNull(message = "Datetime is required")
     @Column(name = "datetime", nullable = false)
     private Instant datetime;
 
     @Column(name = "last_quote_at")
     private Instant lastQuoteAt;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "Open price must be positive")
     @Column(name = "open", precision = 19, scale = 6)
     private BigDecimal open;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "High price must be positive")
     @Column(name = "high", precision = 19, scale = 6)
     private BigDecimal high;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "Low price must be positive")
     @Column(name = "low", precision = 19, scale = 6)
     private BigDecimal low;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "Close price must be positive")
     @Column(name = "close", precision = 19, scale = 6)
     private BigDecimal close;
 
+    @PositiveOrZero(message = "Volume cannot be negative")
     @Column(name = "volume")
     private Long volume;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "Previous close price must be positive")
     @Column(name = "previous_close", precision = 19, scale = 6)
     private BigDecimal previousClose;
 
     @Column(name = "change_value", precision = 19, scale = 6)
     private BigDecimal changeValue;
 
+    @DecimalMin(value = "-100.0", message = "Percent change cannot be less than -100%")
+    @DecimalMax(value = "100.0", message = "Percent change cannot be greater than 100%")
     @Column(name = "percent_change", precision = 8, scale = 4)
     private BigDecimal percentChange;
 
+    @PositiveOrZero(message = "Average volume cannot be negative")
     @Column(name = "average_volume")
     private Long averageVolume;
 

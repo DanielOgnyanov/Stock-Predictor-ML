@@ -20,6 +20,7 @@ public class DataBaseInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        userService.createInitialUser();
         roleService.InitRoleInDb();
 
     }

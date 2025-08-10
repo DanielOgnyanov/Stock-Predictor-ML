@@ -6,5 +6,6 @@ import main.java.models.entities.UserEntity;
 
 public interface UserService {
 
+    void createInitialUser();
     UserEntity registerUser(UserRegistrationDTO userRegistrationDTO);
 }

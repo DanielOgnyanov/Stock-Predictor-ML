@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createInitialUser() {
-        if (!userRepository.existsByEmail("admin@example.com")) {
+        if (!userRepository.existsByEmail("test.user@example.com")) {
             UserEntity initialUser = UserEntity.builder()
                     .firstName("Test")
                     .lastName("User")

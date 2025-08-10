@@ -1,4 +1,4 @@
-package config;
+package main.java.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

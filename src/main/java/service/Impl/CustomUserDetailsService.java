@@ -1,14 +1,15 @@
-package service.Impl;
+package main.java.service.Impl;
 
-import models.entities.UserEntity;
+
+import main.java.models.entities.UserEntity;
+import main.java.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+
 
 import java.util.Collections;
 

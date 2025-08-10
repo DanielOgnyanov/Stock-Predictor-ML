@@ -1,16 +1,18 @@
-package web;
+package main.java.web;
 
 
 import jakarta.validation.Valid;
-import models.dto.UserRegistrationDTO;
-import models.entities.UserEntity;
+
+import main.java.models.dto.UserRegistrationDTO;
+import main.java.models.entities.UserEntity;
+import main.java.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.UserService;
+
 
 @RestController
 @RequestMapping("/api/user")

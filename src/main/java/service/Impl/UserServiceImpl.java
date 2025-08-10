@@ -1,13 +1,17 @@
-package service.Impl;
+package main.java.service.Impl;
 
-import exceptions.ResourceConflictException;
-import models.dto.UserRegistrationDTO;
-import models.entities.UserEntity;
-import models.enums.Role;
+
+
+import main.java.exceptions.ResourceConflictException;
+import main.java.models.dto.UserRegistrationDTO;
+import main.java.models.entities.UserEntity;
+import main.java.models.enums.Role;
+import main.java.repository.UserRepository;
+import main.java.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
-import service.UserService;
+
+
 
 @Service
 public class UserServiceImpl implements UserService {

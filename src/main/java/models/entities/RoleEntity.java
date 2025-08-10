@@ -1,9 +1,10 @@
-package models.entities;
+package main.java.models.entities;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import models.enums.Role;
+import main.java.models.enums.Role;
+
 
 @Entity
 @Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = "name"))

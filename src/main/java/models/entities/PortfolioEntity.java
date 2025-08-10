@@ -1,4 +1,4 @@
-package models.entities;
+package main.java.models.entities;
 
 
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package service;
+package main.java.service;
 
 public interface StockService {
 }

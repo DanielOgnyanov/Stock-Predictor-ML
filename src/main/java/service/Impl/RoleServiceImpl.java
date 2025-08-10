@@ -1,10 +1,14 @@
-package service.Impl;
+package main.java.service.Impl;
 
-import models.entities.RoleEntity;
-import models.enums.Role;
+
+
+import main.java.models.entities.RoleEntity;
+import main.java.models.enums.Role;
+import main.java.repository.RoleRepository;
+import main.java.service.RoleService;
 import org.springframework.stereotype.Service;
-import repository.RoleRepository;
-import service.RoleService;
+
+
 
 import java.util.Arrays;
 

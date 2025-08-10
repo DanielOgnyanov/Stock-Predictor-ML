@@ -1,7 +1,8 @@
-package service.Impl;
+package main.java.service.Impl;
 
+import main.java.service.PredictionService;
 import org.springframework.stereotype.Service;
-import service.PredictionService;
+
 
 
 @Service

@@ -1,7 +1,8 @@
-package repository;
+package main.java.repository;
 
 
-import models.entities.RoleEntity;
+
+import main.java.models.entities.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

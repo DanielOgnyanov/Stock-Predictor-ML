@@ -1,4 +1,4 @@
-package models.entities;
+package main.java.models.entities;
 
 
 import jakarta.persistence.Column;
@@ -7,14 +7,12 @@ import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "predictions", indexes = {
+@Table(name = "predict", indexes = {
         @Index(name = "idx_symbol_prediction_date", columnList = "symbol, prediction_date")
 })
 @Getter
@@ -22,7 +20,8 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PredictionEntity extends BaseEntity{
+@Data
+public class PredictEntity extends BaseEntity{
 
 
     @Column(nullable = false, length = 10)
@@ -35,7 +34,7 @@ public class PredictionEntity extends BaseEntity{
     @DecimalMin(value = "0.0", inclusive = false, message = "Predicted price must be positive")
     private BigDecimal predictedPrice;
 
-    @Column(length = 10)
+    @Column(name = "signal_code", length = 10)
     @Size(max = 10, message = "Signal length must be at most 10 characters")
     private String signal;
 

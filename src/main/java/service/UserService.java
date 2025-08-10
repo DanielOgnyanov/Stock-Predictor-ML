@@ -1,7 +1,8 @@
-package service;
+package main.java.service;
 
-import models.dto.UserRegistrationDTO;
-import models.entities.UserEntity;
+
+import main.java.models.dto.UserRegistrationDTO;
+import main.java.models.entities.UserEntity;
 
 public interface UserService {
 

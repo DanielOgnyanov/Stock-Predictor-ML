@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO registrationDto) {
         try {
             UserEntity savedUser = userService.registerUser(registrationDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
 
         } catch (IllegalArgumentException ex) {
 

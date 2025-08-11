@@ -3,6 +3,8 @@ package main.java.web;
 
 import jakarta.validation.Valid;
 
+import main.java.models.dto.LoginRequestDTO;
+import main.java.models.dto.LoginResponseDTO;
 import main.java.models.dto.UserRegistrationDTO;
 import main.java.models.entities.UserEntity;
 import main.java.service.UserService;
@@ -38,5 +40,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error occurred during registration.");
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
+        LoginResponseDTO response = userService.login(loginRequest);
+        return ResponseEntity.ok(response);
     }
 }

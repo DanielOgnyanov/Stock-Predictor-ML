@@ -2,16 +2,20 @@ package main.java.service.Impl;
 
 
 
+import main.java.config.JwtUtil;
 import main.java.exceptions.ResourceConflictException;
+import main.java.exceptions.ResourceNotFoundException;
+import main.java.models.dto.LoginRequestDTO;
+import main.java.models.dto.LoginResponseDTO;
 import main.java.models.dto.UserRegistrationDTO;
 import main.java.models.entities.UserEntity;
 import main.java.models.enums.Role;
 import main.java.repository.UserRepository;
 import main.java.service.UserService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -20,10 +24,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
 
@@ -66,5 +72,24 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
 
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO request) {
+        Optional<UserEntity> userOpt = userRepository.findByEmail(request.getEmail());
+
+        if (userOpt.isEmpty()) {
+            throw new ResourceNotFoundException("Invalid email or password");
+        }
+
+        UserEntity user = userOpt.get();
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new ResourceConflictException("Invalid email or password");
+        }
+
+        String token = jwtUtil.generateToken(user.getEmail());
+
+        return new LoginResponseDTO(token, user.getLastName(), user.getRole().toString());
     }
 }

@@ -3,8 +3,8 @@ package main.java.service.Impl;
 
 
 import main.java.config.JwtUtil;
-import main.java.exceptions.ResourceConflictException;
-import main.java.exceptions.ResourceNotFoundException;
+import main.java.exceptions.EmailAlreadyExistsException;
+import main.java.exceptions.InvalidCredentialsException;
 import main.java.models.dto.LoginRequestDTO;
 import main.java.models.dto.LoginResponseDTO;
 import main.java.models.dto.UserRegistrationDTO;
@@ -12,8 +12,10 @@ import main.java.models.entities.UserEntity;
 import main.java.models.enums.Role;
 import main.java.repository.UserRepository;
 import main.java.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -53,11 +55,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity registerUser(UserRegistrationDTO userRegistrationDTO) {
 
-
         if (userRepository.existsByEmail(userRegistrationDTO.getEmail())) {
-            throw new ResourceConflictException("Email already registered: " + userRegistrationDTO.getEmail());
+            throw new EmailAlreadyExistsException(userRegistrationDTO.getEmail());
         }
-
 
         UserEntity user = UserEntity.builder()
                 .firstName(userRegistrationDTO.getFirstName())
@@ -79,17 +79,19 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isEmpty()) {
-            throw new ResourceNotFoundException("Invalid email or password");
+            throw new InvalidCredentialsException();
         }
 
         UserEntity user = userOpt.get();
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new ResourceConflictException("Invalid email or password");
+            throw new InvalidCredentialsException();
         }
 
         String token = jwtUtil.generateToken(user.getEmail());
 
         return new LoginResponseDTO(token, user.getLastName(), user.getRole().toString());
     }
+
+
 }

@@ -7,6 +7,7 @@ import main.java.models.dto.LoginRequestDTO;
 import main.java.models.dto.LoginResponseDTO;
 import main.java.models.dto.UserRegistrationDTO;
 import main.java.models.entities.UserEntity;
+import main.java.repository.UserRepository;
 import main.java.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -21,25 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO registrationDto) {
-        try {
+
             UserEntity savedUser = userService.registerUser(registrationDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
 
-        } catch (IllegalArgumentException ex) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        } catch (Exception ex) {
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An unexpected error occurred during registration.");
-        }
     }
 
     @PostMapping("/login")
@@ -47,4 +44,6 @@ public class UserController {
         LoginResponseDTO response = userService.login(loginRequest);
         return ResponseEntity.ok(response);
     }
+
+    
 }

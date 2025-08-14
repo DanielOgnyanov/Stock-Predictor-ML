@@ -7,45 +7,17 @@ public class StockQuoteResponseDTO {
     private String symbol;
     private String name;
     private String open;
+    private String high;
+    private String low;
+    private String close;
+    private String volume;
 
-    public String getHigh() {
-        return high;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setHigh(String high) {
-        this.high = high;
-    }
-
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(String volume) {
-        this.volume = volume;
-    }
-
-    public String getClose() {
-        return close;
-    }
-
-    public void setClose(String close) {
-        this.close = close;
-    }
-
-    public String getLow() {
-        return low;
-    }
-
-    public void setLow(String low) {
-        this.low = low;
-    }
-
-    public String getOpen() {
-        return open;
-    }
-
-    public void setOpen(String open) {
-        this.open = open;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getName() {
@@ -56,16 +28,43 @@ public class StockQuoteResponseDTO {
         this.name = name;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getOpen() {
+        return open;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setOpen(String open) {
+        this.open = open;
     }
 
-    private String high;
-    private String low;
-    private String close;
-    private String volume;
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
+        this.high = high;
+    }
+
+    public String getLow() {
+        return low;
+    }
+
+    public void setLow(String low) {
+        this.low = low;
+    }
+
+    public String getClose() {
+        return close;
+    }
+
+    public void setClose(String close) {
+        this.close = close;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
 }

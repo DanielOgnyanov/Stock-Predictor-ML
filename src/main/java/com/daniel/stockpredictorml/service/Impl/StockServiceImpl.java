@@ -1,16 +1,14 @@
-package com.daniel.stockpredictorml.service.Impl;
-
+package com.daniel.stockpredictorml.service.impl;
 
 import com.daniel.stockpredictorml.models.dto.StockQuoteResponseDTO;
 import com.daniel.stockpredictorml.models.entities.StockEntity;
+import com.daniel.stockpredictorml.models.enums.TopStockSymbol;
 import com.daniel.stockpredictorml.repository.StockRepository;
 import com.daniel.stockpredictorml.service.StockService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.List;
-
 
 @Service
 public class StockServiceImpl implements StockService {
@@ -18,27 +16,25 @@ public class StockServiceImpl implements StockService {
     private final StockRepository stockRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
+
+    private static final String API_KEY = "";
+    private static final String BASE_URL = "https://api.twelvedata.com/quote";
+
     public StockServiceImpl(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
     @Override
-    public void fetchAndStoreQuotes(List<String> symbols) {
-
-        String apiKey = "";
-        String baseUrl = "https://api.twelvedata.com/quote";
-
-        int maxSymbols = Math.min(symbols.size(), 50);
-
-        for (int i = 0; i < maxSymbols; i++) {
-            String symbol = symbols.get(i);
-            String url = baseUrl + "?symbol=" + symbol + "&apikey=" + apiKey;
+    public void fetchAndStoreQuotes() {
+        for (TopStockSymbol stockSymbol : TopStockSymbol.values()) {
+            String symbol = stockSymbol.getSymbol();
+            String url = BASE_URL + "?symbol=" + symbol + "&apikey=" + API_KEY;
 
             try {
                 StockQuoteResponseDTO response = restTemplate.getForObject(url, StockQuoteResponseDTO.class);
-                if (response != null) {
-                    StockEntity stockEntity = getStockEntity(response);
 
+                if (response != null) {
+                    StockEntity stockEntity = mapToEntity(response);
                     stockRepository.save(stockEntity);
                     System.out.println("Saved: " + symbol);
                 }
@@ -46,10 +42,9 @@ public class StockServiceImpl implements StockService {
                 System.err.println("Error fetching/saving symbol: " + symbol + " - " + e.getMessage());
             }
         }
-
     }
 
-    private static StockEntity getStockEntity(StockQuoteResponseDTO response) {
+    private StockEntity mapToEntity(StockQuoteResponseDTO response) {
         StockEntity stockEntity = new StockEntity();
         stockEntity.setSymbol(response.getSymbol());
         stockEntity.setName(response.getName());

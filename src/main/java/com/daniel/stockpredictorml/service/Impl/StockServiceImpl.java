@@ -1,4 +1,4 @@
-package com.daniel.stockpredictorml.service.impl;
+package com.daniel.stockpredictorml.service.Impl;
 
 import com.daniel.stockpredictorml.models.dto.StockQuoteResponseDTO;
 import com.daniel.stockpredictorml.models.entities.StockEntity;
@@ -17,7 +17,7 @@ public class StockServiceImpl implements StockService {
     private final RestTemplate restTemplate = new RestTemplate();
 
 
-    private static final String API_KEY = "";
+    private static final String API_KEY = "b78dab5f38a54cfcae5ee920eeeda8ed";
     private static final String BASE_URL = "https://api.twelvedata.com/quote";
 
     public StockServiceImpl(StockRepository stockRepository) {
@@ -45,14 +45,32 @@ public class StockServiceImpl implements StockService {
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {
-        StockEntity stockEntity = new StockEntity();
-        stockEntity.setSymbol(response.getSymbol());
-        stockEntity.setName(response.getName());
-        stockEntity.setOpen(new BigDecimal(response.getOpen()));
-        stockEntity.setHigh(new BigDecimal(response.getHigh()));
-        stockEntity.setLow(new BigDecimal(response.getLow()));
-        stockEntity.setClose(new BigDecimal(response.getClose()));
-        stockEntity.setVolume(Long.parseLong(response.getVolume()));
-        return stockEntity;
+        return StockEntity.builder()
+                .symbol(response.getSymbol())
+                .name(response.getName())
+                .exchange(response.getExchange())
+                .micCode(response.getMicCode())
+                .currency(response.getCurrency())
+                .datetime(response.getDatetime())
+                .lastQuoteAt(response.getLastQuoteAt())
+                .open(response.getOpen())
+                .high(response.getHigh())
+                .low(response.getLow())
+                .close(response.getClose())
+                .volume(response.getVolume())
+                .previousClose(response.getPreviousClose())
+                .changeValue(response.getChangeValue())
+                .percentChange(response.getPercentChange())
+                .averageVolume(response.getAverageVolume())
+                .isMarketOpen(response.getIsMarketOpen())
+                .extendedChange(response.getExtendedChange())
+                .extendedPercentChange(response.getExtendedPercentChange())
+                .extendedPrice(response.getExtendedPrice())
+                .extendedTimestamp(response.getExtendedTimestamp())
+                .build();
     }
+
+
+
+
 }

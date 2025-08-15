@@ -1,70 +1,46 @@
 package com.daniel.stockpredictorml.models.dto;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class StockQuoteResponseDTO {
 
     private String symbol;
     private String name;
-    private String open;
-    private String high;
-    private String low;
-    private String close;
-    private String volume;
+    private String exchange;
+    private String micCode;
+    private String currency;
 
-    public String getSymbol() {
-        return symbol;
-    }
+    private Instant datetime;
+    private Instant lastQuoteAt;
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+    private BigDecimal open;
+    private BigDecimal high;
+    private BigDecimal low;
+    private BigDecimal close;
 
-    public String getName() {
-        return name;
-    }
+    private Long volume;
+    private BigDecimal previousClose;
+    private BigDecimal changeValue;
+    private BigDecimal percentChange;
+    private Long averageVolume;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Boolean isMarketOpen;
 
-    public String getOpen() {
-        return open;
-    }
+    private BigDecimal extendedChange;
+    private BigDecimal extendedPercentChange;
+    private BigDecimal extendedPrice;
+    private Instant extendedTimestamp;
 
-    public void setOpen(String open) {
-        this.open = open;
-    }
 
-    public String getHigh() {
-        return high;
-    }
-
-    public void setHigh(String high) {
-        this.high = high;
-    }
-
-    public String getLow() {
-        return low;
-    }
-
-    public void setLow(String low) {
-        this.low = low;
-    }
-
-    public String getClose() {
-        return close;
-    }
-
-    public void setClose(String close) {
-        this.close = close;
-    }
-
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(String volume) {
-        this.volume = volume;
-    }
 }

@@ -5,24 +5,15 @@ import java.util.List;
 
 public enum TopStockSymbol {
 
-    AAPL("Apple Inc."),
-    MSFT("Microsoft Corporation"),
-    NVDA("NVIDIA Corporation"),
-    GOOGL("Alphabet Inc. Class A"),
-    AMZN("Amazon.com, Inc.");
+    AAPL;
+    //MSFT,
+    //NVDA,
+    //GOOGL,
+   //AMZN;
 
-    private final String companyName;
-
-    TopStockSymbol(String companyName) {
-        this.companyName = companyName;
-    }
 
     public String getSymbol() {
         return name();
-    }
-
-    public String getCompanyName() {
-        return companyName;
     }
 
     public static List<String> symbols() {

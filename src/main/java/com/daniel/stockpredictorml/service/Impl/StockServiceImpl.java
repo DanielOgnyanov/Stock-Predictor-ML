@@ -8,8 +8,6 @@ import com.daniel.stockpredictorml.service.StockService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
-
 @Service
 public class StockServiceImpl implements StockService {
 
@@ -31,7 +29,9 @@ public class StockServiceImpl implements StockService {
             String url = BASE_URL + "?symbol=" + symbol + "&apikey=" + API_KEY;
 
             try {
+
                 StockQuoteResponseDTO response = restTemplate.getForObject(url, StockQuoteResponseDTO.class);
+
 
                 if (response != null) {
                     StockEntity stockEntity = mapToEntity(response);
@@ -48,27 +48,16 @@ public class StockServiceImpl implements StockService {
         return StockEntity.builder()
                 .symbol(response.getSymbol())
                 .name(response.getName())
-                .exchange(response.getExchange())
-                .micCode(response.getMicCode())
                 .currency(response.getCurrency())
-                .datetime(response.getDatetime())
-                .lastQuoteAt(response.getLastQuoteAt())
                 .open(response.getOpen())
                 .high(response.getHigh())
                 .low(response.getLow())
                 .close(response.getClose())
                 .volume(response.getVolume())
-                .previousClose(response.getPreviousClose())
-                .changeValue(response.getChangeValue())
-                .percentChange(response.getPercentChange())
-                .averageVolume(response.getAverageVolume())
-                .isMarketOpen(response.getIsMarketOpen())
-                .extendedChange(response.getExtendedChange())
-                .extendedPercentChange(response.getExtendedPercentChange())
-                .extendedPrice(response.getExtendedPrice())
-                .extendedTimestamp(response.getExtendedTimestamp())
+
                 .build();
     }
+
 
 
 

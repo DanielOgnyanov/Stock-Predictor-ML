@@ -20,9 +20,9 @@ public class StockQuoteResponseDTO {
    private String symbol;
    private String name;
    private String currency;
-   private double open;
-   private double high;
-   private double low;
-   private double close;
+   private BigDecimal open;
+   private BigDecimal high;
+   private BigDecimal low;
+   private BigDecimal close;
    private int volume;
 }

@@ -39,19 +39,19 @@ public class StockEntity extends BaseEntity {
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Open price must be positive")
     @Column(name = "open", precision = 19, scale = 6)
-    private double open;
+    private BigDecimal open;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "High price must be positive")
     @Column(name = "high", precision = 19, scale = 6)
-    private double high;
+    private BigDecimal high;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Low price must be positive")
     @Column(name = "low", precision = 19, scale = 6)
-    private double low;
+    private BigDecimal low;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Close price must be positive")
     @Column(name = "close", precision = 19, scale = 6)
-    private double close;
+    private BigDecimal close;
 
     @PositiveOrZero(message = "Volume cannot be negative")
     @Column(name = "volume")

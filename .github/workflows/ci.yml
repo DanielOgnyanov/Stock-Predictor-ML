@@ -11,18 +11,18 @@ jobs:
     name: Build & Test Java Backend
     runs-on: ubuntu-latest
     steps:
-      # Checkout the com.daniel.stockpredictorml.repository
+
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up JDK (Java 21 or your version)
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
-      # Cache Maven dependencies for speed
+
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -31,15 +31,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Build and run tests
+
       - name: Build with Maven
         run: mvn clean install
 
-  # com.daniel.stockpredictorml.python-com.daniel.stockpredictorml.service:
+
   #   name: Test Python Microservice
   #   runs-on: ubuntu-latest
   #   steps:
-  #     # Checkout com.daniel.stockpredictorml.repository
+  #
   #     - name: Checkout code
   #       uses: actions/checkout@v4
 
@@ -49,14 +49,14 @@ jobs:
   #       with:
   #         python-version: '3.12'
 
-  #     # Install dependencies
+  #
   #     - name: Install Python dependencies
   #       run: |
   #         cd com.daniel.stockpredictorml.python-com.daniel.stockpredictorml.service
   #         pip install --upgrade pip
   #         pip install -r requirements.txt
 
-  #     # Run Python tests
+  #
   #     - name: Run Python tests
   #       run: |
   #         cd com.daniel.stockpredictorml.python-com.daniel.stockpredictorml.service

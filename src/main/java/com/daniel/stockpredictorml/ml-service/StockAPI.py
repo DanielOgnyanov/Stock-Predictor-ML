@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import pandas as pd
-from stock_model import StockModel
+from StockModel import StockModel
 
 class StockAPI:
     def __init__(self):

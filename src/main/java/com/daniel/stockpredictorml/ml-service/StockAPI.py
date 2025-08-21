@@ -15,4 +15,12 @@ class StockAPI:
             return "Stock API is running!"
 
 
+        @self.app.route('/predict', methods=['POST'])
+        def predict():
+            data = request.json
+            df = pd.DataFrame(data)
+            predictions = self.model.predict(df)
+            return jsonify(predictions.tolist())
 
+    def run(self):
+        self.app.run(debug=True)

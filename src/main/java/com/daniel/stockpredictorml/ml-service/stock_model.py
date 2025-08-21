@@ -28,3 +28,10 @@ class StockModel:
             raise ValueError("Model is not trained yet!")
         return self.model.predict(X)
 
+    def evaluate(self, X, y):
+
+        if not self.model:
+            raise ValueError("Model is not trained yet!")
+        predictions = self.model.predict(X)
+        mse = mean_squared_error(y, predictions)
+        return mse

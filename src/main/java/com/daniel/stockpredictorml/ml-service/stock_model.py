@@ -22,3 +22,9 @@ class StockModel:
         joblib.dump(self.model, self.model_path)
         return self.model
 
+    def predict(self, X):
+
+        if not self.model:
+            raise ValueError("Model is not trained yet!")
+        return self.model.predict(X)
+

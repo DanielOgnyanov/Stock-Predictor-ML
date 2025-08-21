@@ -14,3 +14,11 @@ class StockModel:
         if os.path.exists(model_path):
             self.model = joblib.load(model_path)
 
+    def train(self, X, y):
+
+        self.model = LinearRegression()
+        self.model.fit(X, y)
+        # Save the trained model
+        joblib.dump(self.model, self.model_path)
+        return self.model
+

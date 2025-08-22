@@ -24,3 +24,7 @@ class StockAPI:
 
     def run(self):
         self.app.run(debug=True)
+
+        if __name__ == "__main__":
+            api = StockAPI()
+            api.run()

@@ -13,7 +13,5 @@ import java.util.Optional;
 @Repository
 public interface StockRepository  extends JpaRepository<StockEntity, Long> {
 
-    Optional<StockEntity> findBySymbol(String symbol);
-
-    List<StockEntity> findAllBySymbol(String symbol);
+    Optional<StockEntity> findTopBySymbolOrderByDateTimeDesc(String symbol);
 }

@@ -5,7 +5,6 @@ import com.daniel.stockpredictorml.models.dto.LoginResponseDTO;
 import com.daniel.stockpredictorml.models.dto.UserRegistrationDTO;
 import com.daniel.stockpredictorml.models.entities.UserEntity;
 import com.daniel.stockpredictorml.repository.UserRepository;
-import jakarta.validation.Valid;
 
 
 import org.springframework.http.HttpStatus;
@@ -17,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class UserRestController {
 
     private final com.daniel.stockpredictorml.service.UserService userService;
     private final UserRepository userRepository;
 
-    public UserController(com.daniel.stockpredictorml.service.UserService userService, UserRepository userRepository) {
+    public UserRestController(com.daniel.stockpredictorml.service.UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
     }

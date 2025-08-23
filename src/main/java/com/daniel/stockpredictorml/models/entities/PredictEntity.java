@@ -30,5 +30,5 @@ public class PredictEntity extends BaseEntity{
     @Column(nullable = false, precision = 19, scale = 4)
     @NotNull(message = "Predicted price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Predicted price must be positive")
-    private BigDecimal predictedPrice;
+    private BigDecimal predictedClose;
 }

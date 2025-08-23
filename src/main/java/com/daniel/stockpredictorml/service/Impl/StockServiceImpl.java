@@ -8,6 +8,8 @@ import com.daniel.stockpredictorml.service.StockService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class StockServiceImpl implements StockService {
 
@@ -42,6 +44,13 @@ public class StockServiceImpl implements StockService {
                 System.err.println("Error fetching/saving symbol: " + symbol + " - " + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public Optional<StockEntity> getLatestStockBySymbol(String symbol) {
+
+
+        return  stockRepository.findTopBySymbolOrderByDateTimeDesc(symbol);
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

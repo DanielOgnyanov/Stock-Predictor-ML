@@ -1,4 +1,4 @@
 package com.daniel.stockpredictorml.service;
 
-public interface PredictionService {
+public interface PredictService {
 }

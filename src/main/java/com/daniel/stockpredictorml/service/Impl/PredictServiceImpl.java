@@ -71,6 +71,16 @@ public class PredictServiceImpl implements PredictService {
             return;
         }
 
+        for (Object obj : responseList) {
 
+            Map<String, Object> map = (Map<String, Object>) obj;
+
+            PredictEntity prediction = new PredictEntity();
+            prediction.setSymbol((String) map.get("symbol"));
+            prediction.setPredictedClose(((BigDecimal) map.get("predicted_close")));
+
+            predictRepository.save(prediction);
+            logger.info("Prediction saved for symbol {} with predicted_close {}", prediction.getSymbol(), prediction.getPredictedClose());
+        }
     }
 }

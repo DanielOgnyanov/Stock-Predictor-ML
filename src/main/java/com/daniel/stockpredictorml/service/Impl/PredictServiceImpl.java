@@ -39,7 +39,7 @@ public class PredictServiceImpl implements PredictService {
 
     @Override
     public void predictAndSave(String symbol) {
-        Optional<StockEntity> stockOpt = stockRepository.findTopBySymbolOrderByDateTimeDesc(symbol);
+        Optional<StockEntity> stockOpt = stockRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol);
 
         if (stockOpt.isEmpty()) {
             logger.warn("Stock with symbol {} does not exist. Nothing sent to Python service.", symbol);

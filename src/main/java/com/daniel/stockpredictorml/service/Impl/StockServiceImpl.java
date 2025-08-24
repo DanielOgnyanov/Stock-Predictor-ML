@@ -50,7 +50,7 @@ public class StockServiceImpl implements StockService {
     public Optional<StockEntity> getLatestStockBySymbol(String symbol) {
 
 
-        return  stockRepository.findTopBySymbolOrderByDateTimeDesc(symbol);
+        return  stockRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol);
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

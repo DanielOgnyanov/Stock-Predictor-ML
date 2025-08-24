@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PredictRequestDTO {
     private String symbol;
-    private Double open;
-    private Double high;
-    private Double low;
-    private Double close;
-    private Long volume;
+    private BigDecimal open;
+    private BigDecimal high;
+    private BigDecimal low;
+    private BigDecimal close;
+    private int volume;
     private String currency;
     private String name;
 }

@@ -82,5 +82,7 @@ public class PredictServiceImpl implements PredictService {
             predictRepository.save(prediction);
             logger.info("Prediction saved for symbol {} with predicted_close {}", prediction.getSymbol(), prediction.getPredictedClose());
         }
+
+
     }
 }

@@ -53,9 +53,4 @@ public class UserEntity extends BaseEntity {
     @Column(name = "locked", nullable = false)
     private boolean locked = false;
 
-
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PortfolioEntity> portfolios;
-
 }

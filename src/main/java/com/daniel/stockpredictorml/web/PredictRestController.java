@@ -20,7 +20,7 @@ public class PredictRestController {
         this.stockService = stockService;
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public ResponseEntity<String> predictAndSave(@RequestParam String symbol) {
         try {
             predictService.predictAndSave(symbol);

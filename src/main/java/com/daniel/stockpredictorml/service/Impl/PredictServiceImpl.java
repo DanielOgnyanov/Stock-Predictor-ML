@@ -14,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,5 +82,14 @@ public class PredictServiceImpl implements PredictService {
         }
 
 
+    }
+
+    @Override
+    public Optional<PredictResponseDTO> getLatestPrediction(String symbol) {
+        return predictRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol)
+                .map(prediction -> new PredictResponseDTO(
+                        prediction.getSymbol(),
+                        prediction.getPredictedClose()
+                ));
     }
 }

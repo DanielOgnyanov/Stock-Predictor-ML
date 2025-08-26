@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface StockService {
     void fetchAndStoreQuotes();
     Optional<StockEntity> getLatestStockBySymbol(String symbol);
+    List<StockEntity> getAllStocks();
 }

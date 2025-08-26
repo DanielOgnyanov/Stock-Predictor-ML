@@ -8,6 +8,7 @@ import com.daniel.stockpredictorml.service.StockService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,6 +52,11 @@ public class StockServiceImpl implements StockService {
 
 
         return  stockRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol);
+    }
+
+    @Override
+    public List<StockEntity> getAllStocks() {
+        return List.of();
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

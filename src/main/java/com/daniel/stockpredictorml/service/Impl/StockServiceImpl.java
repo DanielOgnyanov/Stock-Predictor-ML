@@ -56,7 +56,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockEntity> getAllStocks() {
-        return List.of();
+        return stockRepository.findAll();
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

@@ -14,4 +14,6 @@ import java.util.Optional;
 public interface StockRepository  extends JpaRepository<StockEntity, Long> {
 
     Optional<StockEntity> findTopBySymbolOrderByUpdatedAtDesc(String symbol);
+
+    List<StockEntity> findAll();
 }

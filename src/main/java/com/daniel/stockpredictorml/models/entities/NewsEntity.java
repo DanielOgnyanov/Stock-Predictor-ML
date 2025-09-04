@@ -18,5 +18,6 @@ public class NewsEntity {
     private String title;
     private String description;
     private String snippet;
+    private String symbol;
 
 }

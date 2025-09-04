@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table
+@Table(name = "news_articles")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,4 +14,9 @@ import lombok.*;
 @Builder
 @Data
 public class NewsEntity {
+
+    private String title;
+    private String description;
+    private String snippet;
+
 }

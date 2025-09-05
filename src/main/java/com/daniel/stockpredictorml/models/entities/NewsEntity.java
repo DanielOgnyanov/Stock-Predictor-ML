@@ -16,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
-public class NewsEntity {
+public class NewsEntity extends BaseEntity{
 
     @NotBlank(message = "Title is required")
     @Size(max = 255, message = "Title cannot exceed 255 characters")

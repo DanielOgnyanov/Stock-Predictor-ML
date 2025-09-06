@@ -17,7 +17,7 @@ public class NewsServiceImpl implements NewsService {
 
 
     private static final String API_KEY = "";
-    private static final String BASE_URL = "https://api.marketaux.com/v1/news/all?symbols=TSLA,AMZN,MSFT&filter_entities=true&language=en&api_token=";
+    private static final String BASE_URL = "https://api.marketaux.com/v1/news/all?symbols=AAPL,MSFT,NVDA,GOOGL,AMZN&filter_entities=true&language=en&api_token=";
     private static String url = BASE_URL + API_KEY;
 
     public NewsServiceImpl(NewsRepositories newsRepositories) {

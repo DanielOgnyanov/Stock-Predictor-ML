@@ -4,6 +4,8 @@ import com.daniel.stockpredictorml.models.dto.NewsResponseDTO;
 import com.daniel.stockpredictorml.models.entities.NewsEntity;
 import com.daniel.stockpredictorml.repository.NewsRepositories;
 import com.daniel.stockpredictorml.service.NewsService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +15,6 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsRepositories newsRepositories;
     private final RestTemplate restTemplate = new RestTemplate();
-
 
 
     private static final String API_KEY = "qLaO07X8EYUf7BP6hZ35noxVT42yeJMPOwW5bAsU";
@@ -28,22 +29,50 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public void fetchAndStoreNews() {
 
-        try{
+        try {
 
-            NewsResponseDTO response = restTemplate.getForObject(url, NewsResponseDTO.class);
+            String response = restTemplate.getForObject(url, String.class);
+
+            System.out.println();
 
             if (response != null) {
 
-                NewsEntity newsEntity = mapToEntity(response);
-                newsRepositories.save(newsEntity);
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(response);
+
+                JsonNode dataArray = root.path("data");
+
+                for (JsonNode newsNode : dataArray) {
+
+                    String title = newsNode.path("title").asText(null);
+                    String description = newsNode.path("description").asText(null);
+                    String snippet = newsNode.path("snippet").asText(null);
+
+                    JsonNode entities = newsNode.path("entities");
+                    String symbol = null;
+                    if (entities.isArray() && entities.size() > 0) {
+                        symbol = entities.get(0).path("symbol").asText(null);
+                    }
+
+
+                    NewsEntity newsEntity = NewsEntity.builder()
+
+                            .title(title)
+                            .description(description)
+                            .snippet(snippet)
+                            .symbol(symbol)
+                            .build();
+
+                    newsRepositories.save(newsEntity);
+
+                }
 
 
             }
 
         } catch (Exception e) {
-            System.err.println("Error fetching/saving symbol: " + " - " + e.getMessage());
+            System.err.println("Error fetching/saving symbol: " + e.getMessage());
         }
-
 
 
     }

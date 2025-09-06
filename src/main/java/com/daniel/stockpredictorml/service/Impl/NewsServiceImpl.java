@@ -1,6 +1,7 @@
 package com.daniel.stockpredictorml.service.Impl;
 
 import com.daniel.stockpredictorml.models.dto.NewsResponseDTO;
+import com.daniel.stockpredictorml.models.entities.NewsEntity;
 import com.daniel.stockpredictorml.repository.NewsRepositories;
 import com.daniel.stockpredictorml.service.NewsService;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class NewsServiceImpl implements NewsService {
 
             if (response != null) {
 
+                NewsEntity newsEntity = mapToEntity(response);
+
             }
 
         } catch (Exception e) {
@@ -41,5 +44,14 @@ public class NewsServiceImpl implements NewsService {
 
 
 
+    }
+
+    private NewsEntity mapToEntity(NewsResponseDTO response) {
+        return NewsEntity.builder()
+                .title(response.getTitle())
+                .snippet(response.getSnippet())
+                .symbol(response.getSymbol())
+                .description(response.getDescription())
+                .build();
     }
 }

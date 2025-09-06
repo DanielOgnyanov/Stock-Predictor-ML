@@ -35,7 +35,7 @@ public class ApplicationSecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
-                        .requestMatchers("/api/stocks").permitAll()
+                        .requestMatchers("/api/news/all").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -35,6 +35,8 @@ public class NewsServiceImpl implements NewsService {
             if (response != null) {
 
                 NewsEntity newsEntity = mapToEntity(response);
+                newsRepositories.save(newsEntity);
+
 
             }
 

@@ -32,7 +32,7 @@ public class NewsServiceImpl implements NewsService {
             NewsResponseDTO response = restTemplate.getForObject(url, NewsResponseDTO.class);
 
         } catch (Exception e) {
-
+            System.err.println("Error fetching/saving symbol: " + " - " + e.getMessage());
         }
 
     }

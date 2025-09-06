@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -32,8 +34,6 @@ public class NewsServiceImpl implements NewsService {
         try {
 
             String response = restTemplate.getForObject(url, String.class);
-
-            System.out.println();
 
             if (response != null) {
 
@@ -77,12 +77,10 @@ public class NewsServiceImpl implements NewsService {
 
     }
 
-    private NewsEntity mapToEntity(NewsResponseDTO response) {
-        return NewsEntity.builder()
-                .title(response.getTitle())
-                .snippet(response.getSnippet())
-                .symbol(response.getSymbol())
-                .description(response.getDescription())
-                .build();
+
+    @Override
+    public List<NewsEntity> getAllTheNewsOrderedByDate() {
+
+        return newsRepositories.findAll();
     }
 }

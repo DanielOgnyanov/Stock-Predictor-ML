@@ -20,7 +20,7 @@ public class StockRestController {
         this.stockService = stockService;
     }
 
-    @GetMapping
+    @GetMapping("/latest")
     public ResponseEntity<List<StockEntity>> getAllStocks() {
         List<StockEntity> stocks = stockService.getAllStocks();
 

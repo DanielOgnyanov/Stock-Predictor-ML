@@ -22,7 +22,7 @@ public class StockRestController {
 
     @GetMapping("/latest")
     public ResponseEntity<List<StockEntity>> getAllStocks() {
-        List<StockEntity> stocks = stockService.getAllStocks();
+        List<StockEntity> stocks = stockService.getAllStocksLatestPricesPerSymbol();
 
         if (stocks.isEmpty()) {
             return ResponseEntity.noContent().build();

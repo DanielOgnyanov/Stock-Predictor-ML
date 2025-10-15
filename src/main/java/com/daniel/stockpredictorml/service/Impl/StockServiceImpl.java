@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -57,6 +58,11 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<StockEntity> getAllStocksLatestPricesPerSymbol() {
         return stockRepository.findLatestPricesPerSymbol();
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllSymbolsWithOpenPriceHistory() {
+        return stockRepository.findAllSymbolsWithOpenPriceHistory();
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

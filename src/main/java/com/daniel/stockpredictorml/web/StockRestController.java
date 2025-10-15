@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stocks")
@@ -28,5 +29,10 @@ public class StockRestController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(stocks);
+    }
+
+    @GetMapping("/price/history/open")
+    public List<Map<String, Object>> getAllSymbolsOpenPriceHistory() {
+        return stockService.getAllSymbolsWithOpenPriceHistory();
     }
 }

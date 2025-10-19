@@ -5,18 +5,21 @@ import com.daniel.stockpredictorml.models.entities.StockEntity;
 import com.daniel.stockpredictorml.models.enums.TopStockSymbol;
 import com.daniel.stockpredictorml.repository.StockRepository;
 import com.daniel.stockpredictorml.service.StockService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
 
 
     private static final String API_KEY = "b78dab5f38a54cfcae5ee920eeeda8ed";
@@ -62,7 +65,25 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<Map<String, Object>> getAllSymbolsWithOpenPriceHistory() {
-        return stockRepository.findAllSymbolsWithOpenPriceHistory();
+        List<Map<String, Object>> rawResults = stockRepository.findAllSymbolsWithOpenPriceHistory();
+
+        return rawResults.stream().map(result -> {
+            Map<String, Object> parsed = new HashMap<>();
+            parsed.put("symbol", result.get("symbol"));
+
+            try {
+                String jsonString = (String) result.get("open_prices");
+                List<Map<String, Object>> openPrices = objectMapper.readValue(
+                        jsonString, new TypeReference<>() {}
+                );
+                parsed.put("open_prices", openPrices);
+            } catch (Exception e) {
+                e.printStackTrace();
+                parsed.put("open_prices", Collections.emptyList());
+            }
+
+            return parsed;
+        }).collect(Collectors.toList());
     }
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {

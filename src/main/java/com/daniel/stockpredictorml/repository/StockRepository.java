@@ -27,18 +27,22 @@ public interface StockRepository  extends JpaRepository<StockEntity, Long> {
 
 
     @Query(value = """
-        SELECT 
-            symbol,
-            JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'date', created_at,
-                    'open', open
-                )
-                ORDER BY created_at
-            ) AS open_prices
+    SELECT 
+        s.symbol,
+        JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'date', s.created_at,
+                'open', s.open
+            )
+        ) AS open_prices
+    FROM (
+        SELECT symbol, open, created_at
         FROM stocks
-        GROUP BY symbol
-        ORDER BY symbol;
+        ORDER BY symbol, created_at
+    ) AS s
+    GROUP BY s.symbol
+    ORDER BY s.symbol;
     """, nativeQuery = true)
     List<Map<String, Object>> findAllSymbolsWithOpenPriceHistory();
+
 }

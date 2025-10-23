@@ -43,7 +43,7 @@ public class ApplicationSecurityConfiguration {
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
                         .requestMatchers("/api/news/all").permitAll()
                         .requestMatchers("/api/stocks/latest").permitAll()
-                        .requestMatchers("/api/stocks/price/history/open").permitAll()
+                        .requestMatchers("/api/stocks/price/history/open/{symbol}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -5,6 +5,7 @@ import com.daniel.stockpredictorml.models.entities.StockEntity;
 import com.daniel.stockpredictorml.service.StockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +32,9 @@ public class StockRestController {
         return ResponseEntity.ok(stocks);
     }
 
-    @GetMapping("/price/history/open")
-    public List<Map<String, Object>> getAllSymbolsOpenPriceHistory() {
-        return stockService.getAllSymbolsWithOpenPriceHistory();
+    @GetMapping("/price/history/open/{symbol}")
+    public List<Map<String, Object>> getPriceHistoryBySymbol(@PathVariable String symbol) {
+        return stockService.getPriceHistoryBySymbol(symbol);
     }
+
 }

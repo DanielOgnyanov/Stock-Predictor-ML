@@ -11,5 +11,5 @@ public interface StockService {
     Optional<StockEntity> getLatestStockBySymbol(String symbol);
     List<StockEntity> getAllStocksLatestPricesPerSymbol();
 
-    List<Map<String, Object>>  getAllSymbolsWithOpenPriceHistory();
+    List<Map<String, Object>>  getPriceHistoryBySymbol(String symbol);
 }

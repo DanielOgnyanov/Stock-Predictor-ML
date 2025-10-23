@@ -64,27 +64,10 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllSymbolsWithOpenPriceHistory() {
-        List<Map<String, Object>> rawResults = stockRepository.findAllSymbolsWithOpenPriceHistory();
-
-        return rawResults.stream().map(result -> {
-            Map<String, Object> parsed = new HashMap<>();
-            parsed.put("symbol", result.get("symbol"));
-
-            try {
-                String jsonString = (String) result.get("open_prices");
-                List<Map<String, Object>> openPrices = objectMapper.readValue(
-                        jsonString, new TypeReference<>() {}
-                );
-                parsed.put("open_prices", openPrices);
-            } catch (Exception e) {
-                e.printStackTrace();
-                parsed.put("open_prices", Collections.emptyList());
-            }
-
-            return parsed;
-        }).collect(Collectors.toList());
+    public List<Map<String, Object>> getPriceHistoryBySymbol(String symbol) {
+        return stockRepository.findPriceHistoryBySymbol(symbol);
     }
+
 
     private StockEntity mapToEntity(StockQuoteResponseDTO response) {
         return StockEntity.builder()

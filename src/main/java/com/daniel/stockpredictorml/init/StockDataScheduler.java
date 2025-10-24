@@ -28,7 +28,7 @@ public class StockDataScheduler {
     }
 
 
-    @Scheduled(fixedRate = 40 * 60 * 1000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void scheduledFetch() {
         if (initialRunDone) {
             stockService.fetchAndStoreQuotes();

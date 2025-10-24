@@ -31,9 +31,10 @@ public interface StockRepository  extends JpaRepository<StockEntity, Long> {
     SELECT s.created_at AS date, s.open AS price
     FROM stocks s
     WHERE s.symbol = :symbol
-    ORDER BY s.created_at
+    ORDER BY s.created_at ASC, s.id ASC
     """, nativeQuery = true)
     List<Map<String, Object>> findPriceHistoryBySymbol(@Param("symbol") String symbol);
+
 
 
 }

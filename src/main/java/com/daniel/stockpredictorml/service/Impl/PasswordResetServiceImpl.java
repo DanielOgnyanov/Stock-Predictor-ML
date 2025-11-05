@@ -4,8 +4,12 @@ import com.daniel.stockpredictorml.models.entities.PasswordResetTokenEntity;
 import com.daniel.stockpredictorml.models.entities.UserEntity;
 import com.daniel.stockpredictorml.repository.PasswordResetTokenRepository;
 import com.daniel.stockpredictorml.repository.UserRepository;
+import com.daniel.stockpredictorml.service.EmailService;
 import com.daniel.stockpredictorml.service.PasswordResetService;
 import jakarta.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -18,23 +22,29 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
     private final PasswordResetTokenRepository tokenRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
 
     public PasswordResetServiceImpl(PasswordResetTokenRepository tokenRepository,
-                                    UserRepository userRepository) {
+                                    UserRepository userRepository,
+                                    EmailService emailService,
+                                    PasswordEncoder passwordEncoder) {
         this.tokenRepository = tokenRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
-    public Optional<PasswordResetTokenEntity> createPasswordResetToken(String email) {
+    public Optional<String> createPasswordResetToken(String email) {
         Optional<UserEntity> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isEmpty()) {
-            return Optional.empty();
-        }
+        if (userOpt.isEmpty()) return Optional.empty();
 
         UserEntity user = userOpt.get();
-
 
         tokenRepository.deleteByUser(user);
 
@@ -44,38 +54,36 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         PasswordResetTokenEntity resetToken = new PasswordResetTokenEntity(token, expiryDate, user);
         tokenRepository.save(resetToken);
 
-        return Optional.of(resetToken);
-    }
+        String resetLink = frontendUrl + "/reset-password?token=" + token;
+        emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
 
-    @Override
-    public Optional<UserEntity> validatePasswordResetToken(String token) {
-        Optional<PasswordResetTokenEntity> tokenOpt = tokenRepository.findByToken(token);
-        if (tokenOpt.isEmpty()) {
-            return Optional.empty();
-        }
-
-        PasswordResetTokenEntity resetToken = tokenOpt.get();
-
-        if (resetToken.isExpired() || resetToken.isUsed()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(resetToken.getUser());
+        return Optional.of(token);
     }
 
     @Override
     @Transactional
-    public void markTokenAsUsed(String token) {
-        tokenRepository.findByToken(token).ifPresent(t -> {
-            t.setUsed(true);
-            tokenRepository.save(t);
-        });
+    public boolean resetPassword(String token, String newPassword) {
+        Optional<PasswordResetTokenEntity> tokenOpt = tokenRepository.findByToken(token);
+        if (tokenOpt.isEmpty()) return false;
+
+        PasswordResetTokenEntity resetToken = tokenOpt.get();
+
+        if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            tokenRepository.delete(resetToken);
+            return false;
+        }
+
+        UserEntity user = resetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        tokenRepository.delete(resetToken);
+        return true;
     }
 
     private String generateSecureToken() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[32];
-        random.nextBytes(bytes);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+        byte[] randomBytes = new byte[32];
+        new SecureRandom().nextBytes(randomBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
     }
 }

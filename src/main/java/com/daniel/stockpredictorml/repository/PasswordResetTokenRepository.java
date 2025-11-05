@@ -1,6 +1,6 @@
 package com.daniel.stockpredictorml.repository;
 
-import com.daniel.stockpredictorml.models.entities.PasswordResetToken;
+import com.daniel.stockpredictorml.models.entities.PasswordResetTokenEntity;
 import com.daniel.stockpredictorml.models.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long>{
-    Optional<PasswordResetToken> findByToken(String token);
+public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetTokenEntity, Long>{
+    Optional<PasswordResetTokenEntity> findByToken(String token);
     void deleteByUser(UserEntity user);
 }

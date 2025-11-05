@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "password_reset_tokens")
-public class PasswordResetToken extends BaseEntity{
+public class PasswordResetTokenEntity extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String token;
@@ -21,9 +21,9 @@ public class PasswordResetToken extends BaseEntity{
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    public PasswordResetToken() {}
+    public PasswordResetTokenEntity() {}
 
-    public PasswordResetToken(String token, LocalDateTime expiryDate, UserEntity user) {
+    public PasswordResetTokenEntity(String token, LocalDateTime expiryDate, UserEntity user) {
         this.token = token;
         this.expiryDate = expiryDate;
         this.user = user;

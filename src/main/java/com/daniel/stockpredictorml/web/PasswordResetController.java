@@ -2,10 +2,7 @@ package com.daniel.stockpredictorml.web;
 
 import com.daniel.stockpredictorml.service.PasswordResetService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,7 +15,7 @@ public class PasswordResetController {
     }
 
     @PostMapping("/request-password-reset")
-    public ResponseEntity<?> requestPasswordReset(@RequestParam String email) {
+    public ResponseEntity<?> requestPasswordReset(@RequestBody String email) {
         var tokenOpt = passwordResetService.createPasswordResetToken(email);
         if (tokenOpt.isEmpty()) {
             return ResponseEntity.badRequest().body("No user found with that email.");
@@ -27,8 +24,8 @@ public class PasswordResetController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam String token,
-                                           @RequestParam String newPassword) {
+    public ResponseEntity<?> resetPassword(@RequestBody String token,
+                                           String newPassword) {
         boolean success = passwordResetService.resetPassword(token, newPassword);
         if (!success) {
             return ResponseEntity.badRequest().body("Invalid or expired token.");

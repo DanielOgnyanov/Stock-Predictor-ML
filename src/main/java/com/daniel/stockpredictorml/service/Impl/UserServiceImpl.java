@@ -1,10 +1,10 @@
 package com.daniel.stockpredictorml.service.Impl;
 
-
-
 import com.daniel.stockpredictorml.config.JwtUtil;
 import com.daniel.stockpredictorml.exceptions.EmailAlreadyExistsException;
 import com.daniel.stockpredictorml.exceptions.InvalidCredentialsException;
+import com.daniel.stockpredictorml.exceptions.UserNotFoundException;
+import com.daniel.stockpredictorml.models.dto.ChangeOldPasswordDTO;
 import com.daniel.stockpredictorml.models.dto.LoginRequestDTO;
 import com.daniel.stockpredictorml.models.dto.LoginResponseDTO;
 import com.daniel.stockpredictorml.models.dto.UserRegistrationDTO;
@@ -89,6 +89,19 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtil.generateToken(user.getEmail());
 
         return new LoginResponseDTO(token, user.getLastName(), user.getRole().toString());
+    }
+
+    @Override
+    public void changeOldPassword(String email, ChangeOldPasswordDTO changeOldPasswordDTO) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(email));
+
+        if (!passwordEncoder.matches(changeOldPasswordDTO.getOldPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Old password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(changeOldPasswordDTO.getNewPassword()));
+        userRepository.save(user);
     }
 
 

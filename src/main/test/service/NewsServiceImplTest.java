@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,17 +39,17 @@ public class NewsServiceImplTest {
     void fetchAndStoreNews_ShouldSaveParsedNews() {
 
         String fakeResponse = """
-            {
-              "data": [
-                {
-                  "title": "Test News Title",
-                  "description": "Test Description",
-                  "snippet": "Test Snippet",
-                  "entities": [{ "symbol": "AAPL" }]
-                }
-              ]
-            }
-        """;
+                    {
+                      "data": [
+                        {
+                          "title": "Test News Title",
+                          "description": "Test Description",
+                          "snippet": "Test Snippet",
+                          "entities": [{ "symbol": "AAPL" }]
+                        }
+                      ]
+                    }
+                """;
 
 
         when(mockRestTemplate.getForObject(anyString(), eq(String.class))).thenReturn(fakeResponse);

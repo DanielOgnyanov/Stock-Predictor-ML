@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class StockPredictorML {
 
     public static void main(String[] args) {
+
         SpringApplication.run(StockPredictorML.class, args);
     }
 }

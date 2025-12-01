@@ -44,7 +44,7 @@ public class ApplicationSecurityConfiguration {
                         .requestMatchers("/api/news/all").permitAll()
                         .requestMatchers("/api/stocks/latest").permitAll()
                         .requestMatchers("/api/stocks/price/history/open/{symbol}").permitAll()
-                        .requestMatchers("api/auth/request-password-reset").permitAll()
+                        .requestMatchers("/api/auth/request-password-reset").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

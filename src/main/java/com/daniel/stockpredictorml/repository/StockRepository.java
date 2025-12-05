@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,13 +19,8 @@ public interface StockRepository  extends JpaRepository<StockEntity, Long> {
 
     Optional<StockEntity> findTopBySymbolOrderByUpdatedAtDesc(String symbol);
 
-    @Query("""
-    SELECT s FROM StockEntity s
-    WHERE s.updatedAt = (
-        SELECT MAX(s2.updatedAt)
-        FROM StockEntity s2
-        WHERE s2.symbol = s.symbol)""")
-    List<StockEntity> findLatestPricesPerSymbol();
+    List<StockEntity> findByTimestampAfterOrderByTimestampDesc(LocalDateTime timestamp);
+
 
 
     @Query(value = """

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,15 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockEntity> getAllStocksLatestPricesPerSymbol() {
-        return stockRepository.findLatestPricesPerSymbol();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime thirtyDaysAgo = now.minusDays(30);
+
+
+        List<StockEntity> recentPrices =
+                stockRepository.findByTimestampAfterOrderByTimestampDesc(thirtyDaysAgo);
+
+
+        return recentPrices;
     }
 
     @Override

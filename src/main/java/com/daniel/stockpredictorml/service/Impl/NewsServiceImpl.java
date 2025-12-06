@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -71,7 +72,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<NewsEntity> getAllTheNewsOrderedByDate() {
+        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
-        return newsRepositories.findAll();
+        return newsRepositories.findByDateAfterOrderByDateDesc(thirtyDaysAgo);
     }
+
 }

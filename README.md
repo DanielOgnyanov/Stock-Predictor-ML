@@ -1,43 +1,40 @@
 📈 Stock Predictor ML – Backend
 
-The Stock Predictor ML Backend is the core service powering the platform.
-It exposes REST APIs for authentication, stock market data, and predictions, while coordinating with a Python-based ML microservice for stock forecasting.
+The Stock Predictor ML Backend serves as the primary engine of the platform, providing secure REST APIs for authentication, market data retrieval, and machine-learning-based stock forecasts. It integrates seamlessly with a dedicated Python ML microservice to deliver real-time and historical prediction capabilities.
 
-The backend also periodically fetches stock quotes and market news, storing them for fast access and reliable insights.
+In addition to powering API interactions, the backend periodically ingests live stock quotes and financial news, ensuring fast, reliable access to up-to-date market insights.
 
-🔍 What It Does
+🔍 Key Features
 
-User Management – Register and login with secure authentication (JWT).
+User Management – Secure user registration and authentication using JWT.
+Market Data Pipeline – Fetches and stores live stock quotes for rapid querying.
+News Aggregation – Collects and persists stock-related market news.
+ML Prediction Integration – Sends prediction requests to a Python-based ML microservice.
+Automated Scheduling – Background jobs keep market data and news continuously refreshed.
 
-Stock Data – Fetch and persist live stock quotes.
+⚙️ Technology Stack
 
-Market News – Collect and store news articles tied to stocks.
+Java (Spring Boot) – Core backend logic, REST APIs, and scheduled tasks
 
-ML Predictions – Delegate prediction requests to a Python microservice.
+Python Microservice – Machine learning models and prediction processing
 
-Scheduling – Periodic background jobs for keeping data fresh.
+MySQL – Persistent datastore for users, stocks, and news
 
-⚙️ Tech Stack
+Docker & Docker Compose – Fully containerized environment and service orchestration
 
-Java (Spring Boot) – Core backend, APIs, schedulers
-
-Python microservice – ML model for predictions
-
-MySQL – Persistent storage for users, stocks, and news
-
-Docker + docker-compose – Containerized setup and orchestration
-
-JWT – Authentication and secure endpoints
+JWT – Secure authentication and authorization across endpoints
 
 🛠️ Getting Started
 
-Clone the repo and run with Docker:
+Clone the repository and launch the full stack with Docker:
 
 git clone https://github.com/DanielOgnyanov/Stock-Predictor-ML.git
 cd Stock-Predictor-ML
 docker-compose up --build
 
 
+Once running:
+
 Backend API: http://localhost:8080
 
-Python ML service: http://localhost:5000
+Python ML Service: http://localhost:5000

@@ -1,14 +1,33 @@
-# Step 1: Use an official Java runtime as a base
-FROM eclipse-temurin:17-jdk-alpine
+# ==========================
+# Stage 1: Build the JAR
+# ==========================
+FROM maven:3.9.2-eclipse-temurin-17 AS build
 
-# Step 2: Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Step 3: Copy the JAR file from target folder into the container
-COPY target/*.jar app.jar
+# Copy Maven configuration
+COPY pom.xml .
 
-# Step 4: Expose the port
+# Copy source code
+COPY src ./src
+
+# Build the JAR (skip tests for faster build)
+RUN mvn clean package -DskipTests
+
+# ==========================
+# Stage 2: Run the JAR
+# ==========================
+FROM eclipse-temurin:17-jdk-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy the JAR from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the port (optional, but good practice)
 EXPOSE 8080
 
-# Step 5: Run the Spring Boot app, using PORT env variable if provided by Render
-ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${PORT:-8080}"]
+# Run the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]

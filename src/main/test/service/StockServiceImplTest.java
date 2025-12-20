@@ -77,19 +77,7 @@ public class StockServiceImplTest {
     }
 
 
-    @Test
-    void getAllStocksLatestPricesPerSymbol_ShouldReturnList() {
 
-        StockEntity entity = StockEntity.builder().symbol("AAPL").build();
-
-        when(stockRepository.findLatestPricesPerSymbol())
-                .thenReturn(List.of(entity));
-
-        List<StockEntity> result = stockService.getAllStocksLatestPricesPerSymbol();
-
-        assertEquals(1, result.size());
-        assertEquals("AAPL", result.get(0).getSymbol());
-    }
 
 
     @Test

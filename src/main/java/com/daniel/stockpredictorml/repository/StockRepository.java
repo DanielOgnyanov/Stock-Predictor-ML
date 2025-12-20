@@ -17,18 +17,19 @@ import java.util.Optional;
 @Repository
 public interface StockRepository  extends JpaRepository<StockEntity, Long> {
 
+
     Optional<StockEntity> findTopBySymbolOrderByUpdatedAtDesc(String symbol);
 
-    List<StockEntity> findByTimestampAfterOrderByTimestampDesc(LocalDateTime timestamp);
+    List<StockEntity> findByCreatedAtAfterOrderByCreatedAtDesc(LocalDateTime createdAt);
 
 
 
     @Query(value = """
-    SELECT s.created_at AS date, s.open AS price
-    FROM stocks s
-    WHERE s.symbol = :symbol
-    ORDER BY s.created_at ASC, s.id ASC
-    """, nativeQuery = true)
+        SELECT s.created_at AS date, s.open AS price
+        FROM stocks s
+        WHERE s.symbol = :symbol
+        ORDER BY s.created_at ASC, s.id ASC
+        """, nativeQuery = true)
     List<Map<String, Object>> findPriceHistoryBySymbol(@Param("symbol") String symbol);
 
 

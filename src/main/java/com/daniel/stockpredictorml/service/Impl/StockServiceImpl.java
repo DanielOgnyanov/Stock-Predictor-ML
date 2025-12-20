@@ -66,7 +66,7 @@ public class StockServiceImpl implements StockService {
 
 
         List<StockEntity> recentPrices =
-                stockRepository.findByTimestampAfterOrderByTimestampDesc(thirtyDaysAgo);
+                stockRepository.findByCreatedAtAfterOrderByCreatedAtDesc(thirtyDaysAgo);
 
 
         return recentPrices;

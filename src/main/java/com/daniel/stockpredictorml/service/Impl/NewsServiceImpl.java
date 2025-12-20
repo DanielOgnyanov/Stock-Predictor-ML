@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -73,8 +74,9 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<NewsEntity> getAllTheNewsOrderedByDate() {
         LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
+        LocalDateTime thirtyDaysAgoStart = thirtyDaysAgo.atStartOfDay();
 
-        return newsRepositories.findByDateAfterOrderByDateDesc(thirtyDaysAgo);
+        return newsRepositories.findByCreatedAtAfterOrderByCreatedAtDesc(thirtyDaysAgoStart);
     }
 
 }

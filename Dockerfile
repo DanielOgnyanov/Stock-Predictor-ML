@@ -1,34 +1,26 @@
 # ==========================
-# Stage 1: Build the JAR
+# Stage 1: Build the JAR (Java 21)
 # ==========================
-FROM maven:3.9.2-eclipse-temurin-17 AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy Maven configuration
 COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Copy source code
 COPY src ./src
 
-# Build the JAR (skip tests for faster build)
 RUN mvn clean package -DskipTests
 
 # ==========================
-# Stage 2: Run the JAR
+# Stage 2: Run the JAR (Java 21)
 # ==========================
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jre-alpine
 
-
-# Set working directory
 WORKDIR /app
 
-# Copy the JAR from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port (optional, but good practice)
 EXPOSE 8080
 
-# Run the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]

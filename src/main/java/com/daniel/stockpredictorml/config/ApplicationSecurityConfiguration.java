@@ -57,10 +57,12 @@ public class ApplicationSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
+
+        configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
-                "https://stock-predictor-ml-frontend-50awiafcx-daniels-projects-429f878d.vercel.app"
+                "https://*.vercel.app"
         ));
+
         configuration.setAllowedMethods(List.of(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS"
         ));
@@ -71,5 +73,6 @@ public class ApplicationSecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
 }

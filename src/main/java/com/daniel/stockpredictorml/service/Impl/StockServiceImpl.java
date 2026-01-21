@@ -22,7 +22,6 @@ public class StockServiceImpl implements StockService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-
     private static final String API_KEY = "b78dab5f38a54cfcae5ee920eeeda8ed";
     private static final String BASE_URL = "https://api.twelvedata.com/quote";
 
@@ -56,7 +55,7 @@ public class StockServiceImpl implements StockService {
     public Optional<StockEntity> getLatestStockBySymbol(String symbol) {
 
 
-        return  stockRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol);
+        return stockRepository.findTopBySymbolOrderByUpdatedAtDesc(symbol);
     }
 
     @Override
@@ -91,9 +90,6 @@ public class StockServiceImpl implements StockService {
 
                 .build();
     }
-
-
-
 
 
 }
